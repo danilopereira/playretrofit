@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="main_artist">Artist</string>
     <string name="btn_findalbuns">find albuns</string>
+    <string name="mashap_key">eEecxwyZfemshG89uTt8baezLD7Up1OMvp9jsnBKBUSepXxbIc</string>
+    <string name="btn_findArtist">Find Artist</string>
 </resources>

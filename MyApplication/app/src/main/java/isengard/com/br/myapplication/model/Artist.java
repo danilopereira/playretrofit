@@ -6,6 +6,15 @@ package isengard.com.br.myapplication.model;
 public class Artist {
     private String name;
     private String href;
+    private String popularity;
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
+    }
 
     public String getName() {
         return name;

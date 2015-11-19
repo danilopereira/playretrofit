@@ -32,12 +32,4 @@ public class Albums {
         this.href = href;
     }
 
-    @Override
-    public String toString() {
-        return "Albums{" +
-                "name='" + name + '\'' +
-                ", popularity='" + popularity + '\'' +
-                ", href='" + href + '\'' +
-                '}';
-    }
 }

@@ -2,6 +2,7 @@ package isengard.com.br.myapplication.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +16,18 @@ import java.util.List;
 import isengard.com.br.myapplication.R;
 import isengard.com.br.myapplication.api.SpotifyAPI;
 import isengard.com.br.myapplication.model.Albums;
+import isengard.com.br.myapplication.model.Artist;
+import isengard.com.br.myapplication.model.ArtistJSON;
 import retrofit.Call;
+import retrofit.CallAdapter;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
 import retrofit.Retrofit;
 
 public class MainActivity extends ActionBarActivity {
 
-    final static String BASE_URL = "https://mager-spotify-web.p.mashape.com/search/1";
+    final static String BASE_URL = "https://mager-spotify-web.p.mashape.com";
 
     EditText editTextArtist;
     Button button;
@@ -39,14 +46,34 @@ public class MainActivity extends ActionBarActivity {
                 if(editTextArtist.getText().toString() != null || editTextArtist.getText().toString().equals("")){
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(BASE_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
                             .build();
 
                     SpotifyAPI spotifyAPI = retrofit.create(SpotifyAPI.class);
-
-                    List<Albums> albuns = spotifyAPI.findAlbuns(editTextArtist.getText().toString());
-                    for(Albums album : albuns){
-                        Toast.makeText(MainActivity.this, album.getName(), Toast.LENGTH_LONG).show();
+                    String query;
+                    if(editTextArtist.getText().toString().contains(" ")){
+                        query = editTextArtist.getText().toString().replace(' ', '+');
                     }
+                    query = editTextArtist.getText().toString();
+
+                    Call<ArtistJSON> service = spotifyAPI.findArtists(query);
+
+                    service.enqueue(new Callback<ArtistJSON>() {
+                        @Override
+                        public void onResponse(Response<ArtistJSON> response, Retrofit retrofit) {
+                            List<Artist> artists = response.body().getArtists();
+                            for(Artist artist : artists){
+                                Log.i("TETA", artist.getName());
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Log.e("TETA", t.getMessage());
+
+                        }
+                    });
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Inform Artist", Toast.LENGTH_LONG).show();
