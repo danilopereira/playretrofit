@@ -19,6 +19,7 @@ import isengard.com.br.myapplication.model.Artist;
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.MyViewHolder> {
     private List<Artist> artists;
     private LayoutInflater layoutInflater;
+    private RecyclerViewOnClick onClick;
 
     public SpotifyAdapter(Context c, List<Artist> l) {
         this.artists =l;
@@ -50,7 +51,11 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.MyViewHo
         return artists.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public void setOnClick(RecyclerViewOnClick onClick) {
+        this.onClick = onClick;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtNome;
         public TextView txtPop;
         public TextView txtHref;
@@ -62,6 +67,15 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.MyViewHo
             txtPop = (TextView) itemView.findViewById(R.id.txt_pop);
             txtHref = (TextView) itemView.findViewById(R.id.txt_href);
 
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(onClick != null){
+                onClick.onClickListener(v, getPosition());
+            }
         }
     }
 }

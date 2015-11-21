@@ -1,4 +1,4 @@
-package isengard.com.br.myapplication;
+package isengard.com.br.myapplication.activity;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -10,16 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
+import isengard.com.br.myapplication.R;
 import isengard.com.br.myapplication.activity.ArtistsActivity;
 import isengard.com.br.myapplication.activity.MainActivity;
 import isengard.com.br.myapplication.model.Artist;
+import isengard.com.br.myapplication.util.RecyclerViewOnClick;
 import isengard.com.br.myapplication.util.SpotifyAdapter;
 
 
-public class SpotifyFragment extends android.support.v4.app.Fragment {
+public class SpotifyFragment extends android.support.v4.app.Fragment implements RecyclerViewOnClick {
     private RecyclerView mRecyclerView;
     private List<Artist> artists;
 
@@ -49,8 +52,14 @@ public class SpotifyFragment extends android.support.v4.app.Fragment {
 
         artists = ((ArtistsActivity) getActivity()).artists;
         SpotifyAdapter adapter = new SpotifyAdapter(getActivity(), artists);
+        adapter.setOnClick(this);
         mRecyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onClickListener(View v, int position) {
+        Toast.makeText(getActivity(), "Position " + position, Toast.LENGTH_SHORT).show();
     }
 }

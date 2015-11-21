@@ -3,13 +3,10 @@ package isengard.com.br.myapplication.activity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
 import isengard.com.br.myapplication.R;
-import isengard.com.br.myapplication.SpotifyFragment;
 import isengard.com.br.myapplication.model.Artist;
 
 public class ArtistsActivity extends ActionBarActivity {
