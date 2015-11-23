@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -25,12 +26,14 @@ import isengard.com.br.myapplication.util.SpotifyAdapter;
 public class SpotifyFragment extends android.support.v4.app.Fragment implements RecyclerViewOnClick {
     private RecyclerView mRecyclerView;
     private List<Artist> artists;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spotify, container, false);
 
+        progressBar = (ProgressBar) view.findViewById(R.id.pb);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_artists);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -54,6 +57,9 @@ public class SpotifyFragment extends android.support.v4.app.Fragment implements 
         SpotifyAdapter adapter = new SpotifyAdapter(getActivity(), artists);
         adapter.setOnClick(this);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+
 
         return view;
     }

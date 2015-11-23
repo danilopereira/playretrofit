@@ -30,11 +30,10 @@ import retrofit.Retrofit;
 
 public class MainActivity extends ActionBarActivity {
 
-    final static String BASE_URL = "https://mager-spotify-web.p.mashape.com";
+
 
     EditText editTextArtist;
     Button button;
-    public List<Artist> artists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,36 +47,16 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (editTextArtist.getText().toString() != null || editTextArtist.getText().toString().equals("")) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(BASE_URL)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
 
-                    SpotifyAPI spotifyAPI = retrofit.create(SpotifyAPI.class);
-                    String query;
+
+                    String query = editTextArtist.getText().toString();
                     if (editTextArtist.getText().toString().contains(" ")) {
                         query = editTextArtist.getText().toString().replace(' ', '+');
                     }
-                    query = editTextArtist.getText().toString();
 
-                    Call<ArtistJSON> service = spotifyAPI.findArtists(query);
-
-                    service.enqueue(new Callback<ArtistJSON>() {
-                        @Override
-                        public void onResponse(Response<ArtistJSON> response, Retrofit retrofit) {
-                            artists = response.body().getArtists();
-                            Intent intent = new Intent(MainActivity.this, ArtistsActivity.class);
-                            intent.putExtra("artists", (Serializable) artists);
-                            startActivity(intent);
-
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                            Log.e("TETA", t.getMessage());
-
-                        }
-                    });
+                    Intent intent = new Intent(MainActivity.this, ArtistsActivity.class);
+                    intent.putExtra("artist", query);
+                    startActivity(intent);
 
 
                 } else {
