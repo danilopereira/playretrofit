@@ -1,5 +1,6 @@
 package isengard.com.br.myapplication.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import isengard.com.br.myapplication.R;
@@ -31,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
 
     EditText editTextArtist;
     Button button;
+    public List<Artist> artists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editTextArtist.getText().toString() != null || editTextArtist.getText().toString().equals("")){
+                if (editTextArtist.getText().toString() != null || editTextArtist.getText().toString().equals("")) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
 
                     SpotifyAPI spotifyAPI = retrofit.create(SpotifyAPI.class);
                     String query;
-                    if(editTextArtist.getText().toString().contains(" ")){
+                    if (editTextArtist.getText().toString().contains(" ")) {
                         query = editTextArtist.getText().toString().replace(' ', '+');
                     }
                     query = editTextArtist.getText().toString();
@@ -61,10 +65,10 @@ public class MainActivity extends ActionBarActivity {
                     service.enqueue(new Callback<ArtistJSON>() {
                         @Override
                         public void onResponse(Response<ArtistJSON> response, Retrofit retrofit) {
-                            List<Artist> artists = response.body().getArtists();
-                            for(Artist artist : artists){
-                                Log.i("TETA", artist.getName());
-                            }
+                            artists = response.body().getArtists();
+                            Intent intent = new Intent(MainActivity.this, ArtistsActivity.class);
+                            intent.putExtra("artists", (Serializable) artists);
+                            startActivity(intent);
 
                         }
 
@@ -74,8 +78,9 @@ public class MainActivity extends ActionBarActivity {
 
                         }
                     });
-                }
-                else{
+
+
+                } else {
                     Toast.makeText(MainActivity.this, "Inform Artist", Toast.LENGTH_LONG).show();
                 }
 
@@ -104,4 +109,5 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
