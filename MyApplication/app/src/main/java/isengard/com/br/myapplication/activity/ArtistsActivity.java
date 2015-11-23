@@ -23,6 +23,6 @@ public class ArtistsActivity extends ActionBarActivity {
         rvLayout = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(rvLayout);
 
-        
+
     }
 }
