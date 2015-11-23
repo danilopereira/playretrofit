@@ -16,8 +16,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import isengard.com.br.myapplication.R;
-import isengard.com.br.myapplication.activity.ArtistsActivity;
-import isengard.com.br.myapplication.activity.MainActivity;
 import isengard.com.br.myapplication.model.Artist;
 import isengard.com.br.myapplication.util.RecyclerViewOnClick;
 import isengard.com.br.myapplication.util.SpotifyAdapter;
@@ -46,6 +44,17 @@ public class SpotifyFragment extends android.support.v4.app.Fragment implements 
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
+                LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                SpotifyAdapter adapter = (SpotifyAdapter) mRecyclerView.getAdapter();
+
+                if (artists.size() == llm.findLastCompletelyVisibleItemPosition() + 1) {
+                    List<Artist> listAux = ((ArtistsActivity) getActivity()).getArtists(10);
+
+                    for (int i = 0; i < listAux.size(); i++) {
+                        adapter.addListItem(listAux.get(i), artists.size());
+                    }
+                }
+
             }
         });
 
@@ -53,7 +62,7 @@ public class SpotifyFragment extends android.support.v4.app.Fragment implements 
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        artists = ((ArtistsActivity) getActivity()).artists;
+        artists = ((ArtistsActivity) getActivity()).getArtists(10);
         SpotifyAdapter adapter = new SpotifyAdapter(getActivity(), artists);
         adapter.setOnClick(this);
         mRecyclerView.setAdapter(adapter);

@@ -51,6 +51,11 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.MyViewHo
         return artists.size();
     }
 
+    public void addListItem(Artist a, int position){
+        artists.add(a);
+        notifyItemInserted(position);
+    }
+
     public void setOnClick(RecyclerViewOnClick onClick) {
         this.onClick = onClick;
     }
