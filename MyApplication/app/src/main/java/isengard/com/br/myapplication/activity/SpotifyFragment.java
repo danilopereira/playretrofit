@@ -66,6 +66,5 @@ public class SpotifyFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onClickListener(View v, int position) {
         Toast.makeText(getActivity(), "Position " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), AlbunsActivity.class);
     }
 }
