@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextArtist.getText().toString() != null || editTextArtist.getText().toString().equals("")) {
+                if (!editTextArtist.getText().toString().equals("")) {
 
 
                     String query = editTextArtist.getText().toString();

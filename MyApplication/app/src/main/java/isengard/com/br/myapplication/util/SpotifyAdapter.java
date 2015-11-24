@@ -2,6 +2,7 @@ package isengard.com.br.myapplication.util;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.MyViewHo
             txtNome = (TextView) itemView.findViewById(R.id.txt_name);
             txtPop = (TextView) itemView.findViewById(R.id.txt_pop);
             txtHref = (TextView) itemView.findViewById(R.id.txt_href);
+            txtHref.setMovementMethod(LinkMovementMethod.getInstance());
 
             itemView.setOnClickListener(this);
 

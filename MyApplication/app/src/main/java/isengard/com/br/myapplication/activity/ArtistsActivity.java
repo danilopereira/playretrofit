@@ -63,13 +63,4 @@ public class ArtistsActivity extends ActionBarActivity {
             }
         });
     }
-
-    public List<Artist> getArtists(int position){
-        List<Artist> artistAux = new ArrayList<Artist>();
-        for(int i = 0; i < position; i ++){
-            artistAux.add(artists.get(i % artists.size()));
-        }
-
-        return artistAux;
-    }
 }
